@@ -1,4 +1,6 @@
-'/Docket Info/*.csv'
-'/Docket Info/json files/*'
+/Docket-Info/*.csv
+/Docket-Info/.DS_Store
+/Docket-Info/json-files/*
 __pycache__/*
 docket_numbers.csv
+.DS_Store
