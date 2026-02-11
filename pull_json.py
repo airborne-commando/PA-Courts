@@ -29,15 +29,19 @@ def main():
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'
     }
 
+    # Ensure output directory exists
+    save_dir = os.path.join('Docket-Info', 'json-files')
+    os.makedirs(save_dir, exist_ok=True)
+
     for docket_number in tqdm(docket_df['docket_number'].unique()):
         r = requests.get(f'{base_url}{docket_number}', headers=headers)
 
         if r.status_code == 200:
             json_data = json.loads(r.text)
 
-            with open(os.path.join('Docket-Info', 'json-files', f'{docket_number}.json'), 'w') as f:
-                json.dump(fp=f, obj=json_data)
-                f.close()
+            save_path = os.path.join(save_dir, f'{docket_number}.json')
+            with open(save_path, 'w') as f:
+                json.dump(json_data, f)
 
         else:
             print(f'{docket_number} | {r} {r.text}')
