@@ -4,7 +4,8 @@ from tqdm import tqdm
 
 
 def main():
-    folder = os.path.join('Docket Info', 'json files')
+    # Looks inside ../Docket-Info/json-files/*.json
+    folder = os.path.join('Docket-Info', 'json-files')
     for json_file in tqdm([os.path.join(folder, x) for x in os.listdir(folder)]):
         with open(json_file, 'r') as f:
             json_data = json.load(f)

@@ -11,9 +11,10 @@ from pdf_downloader import main as download_pdfs
 from pdf_downloader import BASE_URL
 import os
 
+# Can be any date
 
 START = dt.datetime(year=2025, month=1, day=1)
-END = dt.datetime(year=2026, month=8, day=28)
+END = dt.datetime(year=2025, month=1, day=10)
 STEP = 179
 
 
@@ -124,11 +125,11 @@ if __name__ == '__main__':
 
     df.to_csv('docket_numbers.csv', index=False)
 
-    if os.path.isdir('Docket Info') is False:
-        os.mkdir('Docket Info')
+    if os.path.isdir('Docket-Info') is False:
+        os.mkdir('Docket-Info')
 
     df.to_csv(os.path.join(
-        'Docket Info', f'docket_info {df["query_start_date"].min()} | {df["query_end_date"].max()}.csv'
+        'Docket-Info', f'docket_info-{df["query_start_date"].min()}-{df["query_end_date"].max()}.csv'
     ), index=False)
 
     print(f'Docket Numbers Grabbed: {len(df.index)}')

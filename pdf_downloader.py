@@ -14,22 +14,24 @@ WAIT_RANGE = (2, 5)  # range for seconds to wait between pulls, inclusive
 
 def main(df: pd.DataFrame):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
 
         context = browser.new_context()
         page = context.new_page()
 
+        # Proxy file
         with open('tested_proxies.txt', 'r') as f:
             proxies = f.read().split('\n')
 
         for i, r in tqdm(df.iterrows()):
             year = r['docket_number'].split('-')[-1]
-            save_dir = os.path.join('PDFs', year)
-
-            if os.path.isdir(save_dir) is False:
+            # Saves into Docker-Info/PDFs/YYYY/*.pdf
+            save_dir = os.path.join('Docket-Info','PDFs', year)
+            os.makedirs(save_dir, exist_ok=True)
+            if not os.path.isdir(save_dir):
                 os.mkdir(save_dir)
 
-            file_name = f'{r["docket_number"]}|{r["link_1"].split("=")[-1].replace("%", "-")}.pdf'
+            file_name = f'{r["docket_number"]}-{r["link_1"].split("=")[-1].replace("%", "-")}.pdf'
             save_path = os.path.join(save_dir, file_name)
             url = f'{BASE_URL}{r["link_1"]}'
 
@@ -56,18 +58,19 @@ def main(df: pd.DataFrame):
                 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'
             }
 
-            r = requests.get(url, cookies=requests_cookies, headers=header)
+            resp = requests.get(url, cookies=requests_cookies, headers=header)
 
-            if r.status_code == 200:
+            if resp.status_code == 200:
                 with open(save_path, 'wb') as file:
-                    file.write(r.content)
+                    file.write(resp.content)
             else:
-                print(f"Failed to download PDF. Status code: {r.status_code}: {r.text}| {save_path}")
+                print(f"Failed to download PDF. Status code: {resp.status_code}: {resp.text}| {save_path}")
                 page.goto(url)
-                # page.wait_for_load_state('load')
 
         browser.close()
 
 
 if __name__ == '__main__':
-    main()
+    # Example: load your docket data from CSV
+    df = pd.read_csv('docket_numbers.csv')  # make sure this file exists and has the right columns
+    main(df)
