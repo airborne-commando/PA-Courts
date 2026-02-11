@@ -8,7 +8,7 @@ from tqdm import tqdm
 def main():
     base_url = r'https://services.pacourts.us/public/v1/cases/'
 
-    docket_df = pd.read_csv(r'Docket Info/docket_info 2000-01-01 to 2020-10-12.csv')
+    docket_df = pd.read_csv(r'Docket Info/docket_info 2025-01-01 | 2025-12-24.csv')
 
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
