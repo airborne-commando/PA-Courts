@@ -2,17 +2,17 @@
 This project is meant to download public Pennsylvania court information and store in a usable format for researchers
 
 # How-To Use
-## Install required packages
+## Install required packages and Install Playwright
 ```bash
 pip install -r requirements.txt
 ```
 or
 ```bash
-py -m pip install -r requirements.txt
+py -m pip install -r requirements.txt && py -m playwright install
 ```
 
-## Install Playwright
-```bash
+## Install Playwright if running into issues
+```
 py -m playwright install
 ```
 
@@ -20,7 +20,7 @@ py -m playwright install
 Simply run main.py
 
 When in the project directory, run the following command
-```bash
+```
 py main.py
 ```
 

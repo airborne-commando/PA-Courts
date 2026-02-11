@@ -12,8 +12,8 @@ from pdf_downloader import BASE_URL
 import os
 
 
-START = dt.datetime(year=2010, month=1, day=1)
-END = dt.datetime(year=2024, month=8, day=28)
+START = dt.datetime(year=2000, month=1, day=1)
+END = dt.datetime(year=2030, month=8, day=28)
 STEP = 179
 
 
