@@ -42,3 +42,7 @@ format_json_files.py
 
 ## Configure
 Configurable constants are at the top of main.py and pdf_downloader.py, documented with comments of course.
+
+## Bonus
+
+A shell script included to manually grab with curl is included; named `direct-database.sh`.
